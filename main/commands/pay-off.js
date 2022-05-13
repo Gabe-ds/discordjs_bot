@@ -12,7 +12,7 @@ module.exports = {
         .setDescription('Pay off someone.')
         .addUserOption(option => option.setName(`${payer}`).setDescription('The user').setRequired(true))
         .addIntegerOption(option => option.setName(`${total}`).setDescription('The amount').setRequired(true))
-        // `addUserOption`を使いたいが，複数選択できないので，`addStringOptions`で代替する．
+        // `addUserOption`を使いたいが，複数選択できないので，`addStringOption`で代替する．
         // 最適解かは不明．
         .addStringOption(option => option.setName(`${target}`).setDescription('The user').setRequired(true))
         .addStringOption(option => option.setName(`${description}`).setDescription('Description').setRequired(true)),

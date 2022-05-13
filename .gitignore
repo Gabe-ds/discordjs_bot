@@ -105,5 +105,6 @@ dist
 
 # add
 dev/
+.DS_Store
 main/config.json
 node_modules

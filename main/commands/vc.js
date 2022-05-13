@@ -1,3 +1,4 @@
+const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const { getVoiceConnection, joinVoiceChannel } = require('@discordjs/voice');
 
@@ -13,7 +14,11 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('leave')
-                .setDescription('Leave voice channel')),
+                .setDescription('Leave voice channel'))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('help')
+                .setDescription('Show help')),
 
     async execute(interaction) {
         // 音声接続
@@ -38,5 +43,22 @@ module.exports = {
             connection.destroy();
             return interaction.reply('Left');
         }
+        // ヘルプ
+        if (interaction.options._subcommand === 'help') {
+            console.log(`${interaction}`);
+
+            const embed = new MessageEmbed()
+                // orangered
+                .setColor('#ff4500')
+                .setTitle('Text-to-Speech')
+                .setDescription('This is a voice channel command.')
+                .addFields(
+                    { name: 'help', value: 'Show this message.' },
+                    { name: 'join <VOICE_CHANNEL>', value: 'Join voice channel.' },
+                    { name: 'leave', value: 'Leave voice channel.' },
+                )
+                .setTimestamp();
+            return interaction.reply({ embeds: [embed] });
+        }
     }
-}
+};

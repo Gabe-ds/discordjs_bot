@@ -1,10 +1,13 @@
+// const fs = require('fs');
+// const path = require('path');
+
 const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders')
 const { getVoiceConnection, joinVoiceChannel } = require('@discordjs/voice');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('vc')
+        .setName('tts')
         .setDescription('Voice channel')
         .addSubcommand(subcommand =>
             subcommand
@@ -15,12 +18,20 @@ module.exports = {
             subcommand
                 .setName('leave')
                 .setDescription('Leave voice channel'))
+        // .addSubcommand(subcommand =>
+        //     subcommand
+        //         .setName('set')
+        //         .setDescription('Set Text-to-Speech channel')
+        //         .addChannelOption(option => option.setName('channel').setDescription('The channel').setRequired(true)))
         .addSubcommand(subcommand =>
             subcommand
                 .setName('help')
                 .setDescription('Show help')),
-
     async execute(interaction) {
+        
+        // チャンネル指定の処理を追加する
+        // BotがVCにいるかどうかを確認する処理を追加する
+
         // 音声接続
         if (interaction.options._subcommand === 'join') {
             const channel = interaction.options.getChannel('channel');
@@ -43,10 +54,28 @@ module.exports = {
             connection.destroy();
             return interaction.reply('Left');
         }
+        // // テキストチャンネル設定
+        // if (interaction.options._subcommand === 'set') {
+        //     console.log(`${interaction}`);
+        //     const ttsChannel = interaction.options.getChannel('channel');
+        //     if (channel.type !== 'GUILD_TEXT') {
+        //         return interaction.reply('This is not a text channel.');
+        //     }
+        //     const config = JSON.parse(
+        //         fs.readFileSync(
+        //             path.resolve(__dirname, './main/config.json')
+        //         )
+        //     );
+        //     config.ttsChannel = ttsChannel.id;
+        //     fs.writeFileSync(
+        //         path.resolve(__dirname, './main/config.json'),
+        //         JSON.stringify(config, null, '    '),
+        //         'utf-8'
+        //     );
+        // }
         // ヘルプ
         if (interaction.options._subcommand === 'help') {
             console.log(`${interaction}`);
-
             const embed = new MessageEmbed()
                 // orangered
                 .setColor('#ff4500')

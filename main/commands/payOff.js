@@ -25,6 +25,7 @@ module.exports = {
                 ))
         .addStringOption(option => option.setName(`${description}`).setDescription('Description').setRequired(true)),
     async execute(interaction) {
+
         console.log('pay-off');
 
         const members = interaction.options.getString(`${target}`).split(' ');

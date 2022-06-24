@@ -15,6 +15,14 @@ module.exports = {
         // `addUserOption`を使いたいが，複数選択できないので，`addStringOption`で代替する．
         // 最適解かは不明．
         .addStringOption(option => option.setName(`${target}`).setDescription('The user').setRequired(true))
+        .addStringOption(option =>
+            option.setName('method')
+                .setDescription('The method of payment')
+                .setRequired(true)
+                .addChoices(
+                    { name: 'Cash', value: 'cash' },
+                    { name: 'PayPay', value: 'paypay' },
+                ))
         .addStringOption(option => option.setName(`${description}`).setDescription('Description').setRequired(true)),
     async execute(interaction) {
         console.log('pay-off');
@@ -22,6 +30,7 @@ module.exports = {
         const members = interaction.options.getString(`${target}`).split(' ');
         const parameter = (members.length + 1);
         const amount = Math.round(interaction.options.getInteger(`${total}`) / parameter);
+        const payment = interaction.options.getString('method');
 
         const embed = new MessageEmbed()
             // orangered
@@ -33,6 +42,7 @@ module.exports = {
                 { name: 'Total amount', value: `¥ ${interaction.options.getInteger(`${total}`)}`},
                 { name: 'Amount per person (**ROUNDING**)', value: `¥ ${amount}`},
                 { name: 'Description', value: `${interaction.options.getString(`${description}`)}`},
+                { name: 'Payment method', value: `**${payment}**`},
                 { name: 'Caution', value: 'Please press reaction.'}
             )
             .setTimestamp();

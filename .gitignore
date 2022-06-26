@@ -107,4 +107,5 @@ dist
 dev/
 .DS_Store
 pay-off/main/config.json
+tts/main/config.json
 node_modules

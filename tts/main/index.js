@@ -1,11 +1,12 @@
 const fs = require('node:fs');
 const { Client, Collection, Intents } = require('discord.js');
-const { token } = require('./config.json');
+const { token, ttsChannelId } = require('./config.json');
+const { createQueue } = require('./queue');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.commands = new Collection();
-const commandFiles = fs.readdirSync('./pay-off/main/commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./tts/main/commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -30,5 +31,14 @@ client.on('interactionCreate', async interaction => {
 		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
+
+client.on('message', async message => {
+	if (message.channel.id === ttsChannelId ){
+		const messageList = createQueue();
+
+		messageList.put(message);
+		
+	}
+})
 
 client.login(token);

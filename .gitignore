@@ -106,6 +106,5 @@ dist
 # add
 dev/
 .DS_Store
-main/config.json
-main/speech-to-text-348305-250e6f17b1ce.json
+pay-off/main/config.json
 node_modules
